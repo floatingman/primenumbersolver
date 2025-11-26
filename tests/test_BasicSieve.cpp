@@ -2,6 +2,7 @@
 #include "../include/BasicSieve.hpp"
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 class BasicSieveTest : public ::testing::Test {
 protected:

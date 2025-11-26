@@ -5,8 +5,8 @@ fmt/10.2.1
 gtest/1.14.0
 
 [generators]
-cmake
-cmake_find_package
+CMakeToolchain
+CMakeDeps
 
 [options]
 *:shared=False

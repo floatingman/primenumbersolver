@@ -1,4 +1,87 @@
+# Build directories
+build/
+cmake-build-*/
+out/
 
+# CMake generated files
+.cmake/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CMakeDirectoryInformation.cmake
+progress.marks
+TargetDirectories.txt
+
+# CMake configuration files (generated)
+*-config.cmake
+*-config-version.cmake
+*Targets.cmake
+*-release-*-data.cmake
+
+# Conan generated files
+conan_toolchain.cmake
+conanbuild.sh
+conanrun.sh
+conanbuildenv-*.sh
+conanrunenv-*.sh
+deactivate_conanbuild.sh
+deactivate_conanrun.sh
+cmakedeps_macros.cmake
+conandeps_legacy.cmake
+
+# Find module scripts
+Find*.cmake
+
+# Module configuration files
+module-*-*.cmake
+
+# CTest files
+CTestTestfile.cmake
+Testing/
+
+# Compiled executables
+prime_sieve
+prime_sieve_basic_tests
+prime_sieve_bit_tests
+prime_sieve_wheel_tests
+
+# Object files and build artifacts
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
+# Existing rules from original .gitignore
 .clinerules/byterover-rules.md
 .kilocode/rules/byterover-rules.md
 .roo/rules/byterover-rules.md

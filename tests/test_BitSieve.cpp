@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "../include/BitSieve.hpp"
+#include "../include/BasicSieve.hpp"
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 class BitSieveTest : public ::testing::Test {
 protected:
@@ -188,8 +190,6 @@ TEST_F(BitSieveTest, CompareWithBasicSieve) {
     BitSieve bitSieve(limit);
     bitSieve.generate();
     
-    // Import BasicSieve for comparison
-    #include "../include/BasicSieve.hpp"
     BasicSieve basicSieve(limit);
     basicSieve.generate();
     

@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "../include/WheelSieve.hpp"
+#include "../include/BasicSieve.hpp"
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 class WheelSieveTest : public ::testing::Test {
 protected:
@@ -195,8 +197,6 @@ TEST_F(WheelSieveTest, CompareWithBasicSieve) {
     WheelSieve wheelSieve(limit);
     wheelSieve.generate();
     
-    // Import BasicSieve for comparison
-    #include "../include/BasicSieve.hpp"
     BasicSieve basicSieve(limit);
     basicSieve.generate();
     

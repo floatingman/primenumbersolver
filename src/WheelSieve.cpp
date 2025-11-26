@@ -53,9 +53,17 @@ std::size_t WheelSieve::getNextWheelNumber(std::size_t current) const {
         if (current == 5) return 7;
     }
     
-    // Find position in wheel
-    std::size_t remainder = (current - 7) % WHEEL_SIZE;
-    return current + WHEEL_SKIP[remainder];
+    // For numbers >= 7, use the wheel to find the next number
+    // that is not divisible by 2, 3, or 5
+    std::size_t next = current + 1;
+    while (next <= limit) {
+        if (next % 2 != 0 && next % 3 != 0 && next % 5 != 0) {
+            return next;
+        }
+        next++;
+    }
+    
+    return limit + 1; // Return value > limit to signal end
 }
 
 void WheelSieve::generate() {
@@ -73,12 +81,8 @@ void WheelSieve::generate() {
             
             while (multiple <= limit) {
                 sieve[multiple] = false;
-                // Get the next multiple using wheel factorization
-                multiple = getNextWheelNumber(multiple);
-                if (multiple % p != 0) {
-                    // Ensure we're actually marking a multiple of p
-                    multiple += p;
-                }
+                // Simple approach: just add p to get the next multiple
+                multiple += p;
             }
         }
         

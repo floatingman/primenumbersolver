@@ -23,7 +23,7 @@ private:
     static constexpr std::size_t WHEEL_SIZE = 30;  // 2*3*5
     static constexpr std::size_t WHEEL_PRIMES_COUNT = 8;  // Number of primes in wheel
     static constexpr std::size_t WHEEL_SKIP[WHEEL_SIZE] = {
-        6, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4
+        4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 4, 6
     };
     
     // Primes in the wheel

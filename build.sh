@@ -8,17 +8,14 @@ if [ ! -d "build" ]; then
     mkdir build
 fi
 
-# Change to build directory
-cd build
-
 # Install dependencies with Conan
-conan install .. --build=missing
+conan install . --build=missing
 
-# Configure with CMake
-cmake .. -DCMAKE_BUILD_TYPE=Release
+# Configure with CMake using Conan preset
+cmake --preset conan-release
 
 # Build the project
-cmake --build .
+cmake --build . --config Release
 
 # Run tests
 ctest --verbose
