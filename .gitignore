@@ -18,6 +18,9 @@ TargetDirectories.txt
 *-config-version.cmake
 *Targets.cmake
 *-release-*-data.cmake
+*-Target-release.cmake
+*Config.cmake
+*ConfigVersion.cmake
 
 # Conan generated files
 conan_toolchain.cmake
