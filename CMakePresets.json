@@ -19,7 +19,7 @@
                 "CMAKE_BUILD_TYPE": "Release"
             },
             "toolchainFile": "conan_toolchain.cmake",
-            "binaryDir": "/home/dnewman/git/primenumbersolver"
+            "binaryDir": "${sourceDir}"
         }
     ],
     "buildPresets": [
