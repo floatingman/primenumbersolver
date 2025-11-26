@@ -1,0 +1,106 @@
+#ifndef BIT_SIEVE_HPP
+#define BIT_SIEVE_HPP
+
+#include <vector>
+#include <cstddef>
+#include <cstdint>
+#include <string>
+
+/**
+ * @class BitSieve
+ * @brief Optimized implementation of the Sieve of Eratosthenes using bit manipulation.
+ * 
+ * This class provides an optimized implementation of the Sieve of Eratosthenes algorithm
+ * using bit manipulation to reduce memory usage by a factor of 8 compared to the basic
+ * boolean array implementation.
+ */
+class BitSieve {
+private:
+    std::vector<uint64_t> bits;
+    std::size_t limit;
+    std::size_t bitCount;
+    bool generated;
+
+    /**
+     * @brief Get the value of a bit at the specified index.
+     * @param index The index of the bit to get.
+     * @return True if the bit is set (1), false if it's clear (0).
+     */
+    inline bool getBit(std::size_t index) const;
+
+    /**
+     * @brief Set a bit at the specified index to 1 (non-prime).
+     * @param index The index of the bit to set.
+     */
+    inline void setBit(std::size_t index);
+
+    /**
+     * @brief Clear a bit at the specified index to 0 (prime).
+     * @param index The index of the bit to clear.
+     */
+    inline void clearBit(std::size_t index);
+
+public:
+    /**
+     * @brief Construct a BitSieve with the specified upper limit.
+     * @param n The upper limit for finding prime numbers.
+     */
+    explicit BitSieve(std::size_t n);
+
+    /**
+     * @brief Generate all prime numbers up to the limit using bit manipulation.
+     */
+    void generate();
+
+    /**
+     * @brief Get a vector of all prime numbers found.
+     * @return A vector containing all prime numbers up to the limit.
+     */
+    std::vector<std::size_t> getPrimes();
+
+    /**
+     * @brief Check if a specific number is prime.
+     * @param num The number to check.
+     * @return True if the number is prime, false otherwise.
+     */
+    bool isPrime(std::size_t num);
+
+    /**
+     * @brief Get the count of prime numbers found.
+     * @return The count of prime numbers up to the limit.
+     */
+    std::size_t getPrimeCount();
+
+    /**
+     * @brief Get the upper limit for this sieve.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+
+    /**
+     * @brief Check if the sieve has been generated.
+     * @return True if the sieve has been generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
+
+    /**
+     * @brief Get the memory usage in bytes.
+     * @return The memory usage in bytes.
+     */
+    std::size_t getMemoryUsage() const;
+
+    /**
+     * @brief Print prime numbers to stdout.
+     * @param perLine Number of primes to print per line (default: 10).
+     */
+    void printPrimes(std::size_t perLine = 10) const;
+
+    /**
+     * @brief Save prime numbers to a file.
+     * @param filename The name of the file to save to.
+     * @return True if successful, false otherwise.
+     */
+    bool savePrimesToFile(const std::string& filename) const;
+};
+
+#endif // BIT_SIEVE_HPP
