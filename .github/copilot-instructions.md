@@ -66,7 +66,7 @@ ctest --verbose
 ```cpp
 class MySieve {
 public:
-    std::vector<uint64_t> findPrimes(uint64_t limit) {
+    std::vector<std::size_t> findPrimes(std::size_t limit) {
         if (limit < 2) {
             return {};
         }
@@ -74,7 +74,7 @@ public:
     }
 
 private:
-    std::vector<uint64_t> m_primes;
+    std::vector<std::size_t> m_primes;
 };
 ```
 
