@@ -93,8 +93,9 @@ private:
 #include "BasicSieve.hpp"
 
 TEST(BasicSieveTest, SmallRange) {
-    BasicSieve sieve;
-    auto primes = sieve.findPrimes(10);
+    BasicSieve sieve(10);
+    sieve.generate();
+    auto primes = sieve.getPrimes();
     ASSERT_EQ(primes.size(), 4);
     EXPECT_EQ(primes[0], 2);
     EXPECT_EQ(primes[1], 3);
