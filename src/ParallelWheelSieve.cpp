@@ -2,6 +2,7 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <cmath>
 
 ParallelWheelSieve::ParallelWheelSieve(std::size_t n, int threads) 
     : WheelSieve(n), ParallelSieveBase(threads) {
@@ -116,7 +117,7 @@ void ParallelWheelSieve::markMultiplesParallelChunked(std::size_t prime, std::si
 }
 
 void ParallelWheelSieve::generate() {
-    if (generated) return; // Already generated
+    if (isGenerated()) return; // Already generated
     
     if (!useParallel || threadCount <= 1) {
         // Use sequential implementation for single thread
@@ -142,13 +143,13 @@ void ParallelWheelSieve::generate() {
 }
 
 std::string ParallelWheelSieve::getPerformanceStats() const {
-    if (!generated) {
+    if (!isGenerated()) {
         return "Sieve not generated yet";
     }
     
     std::ostringstream oss;
     oss << "Parallel WheelSieve Performance:\n";
-    oss << "  Limit: " << limit << "\n";
+    oss << "  Limit: " << getLimit() << "\n";
     oss << "  Threads: " << threadCount << "\n";
     oss << "  Parallel: " << (useParallel ? "Yes" : "No") << "\n";
     oss << "  Memory Usage: " << getMemoryUsage() << " bytes\n";

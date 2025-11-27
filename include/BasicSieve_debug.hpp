@@ -1,9 +1,13 @@
-#ifndef BASIC_SIEVE_HPP
-#define BASIC_SIEVE_HPP
+#ifndef BASIC_SIEVE_DEBUG_HPP
+#define BASIC_SIEVE_DEBUG_HPP
 
 #include <vector>
 #include <cstddef>
 #include <string>
+#include <iostream>  // Added for debug logging
+
+// Debug logging macro
+#define DEBUG_LOG(msg) std::cout << "[DEBUG] " << msg << std::endl
 
 /**
  * @class BasicSieve
@@ -18,37 +22,6 @@ private:
     std::size_t limit;
     bool generated;
 
-protected:
-    /**
-     * @brief Get the sieve array for derived classes.
-     * @return Reference to the sieve array.
-     */
-    std::vector<bool>& getSieve() { return sieve; }
-    
-    /**
-     * @brief Get the sieve array for derived classes (const version).
-     * @return Const reference to the sieve array.
-     */
-    const std::vector<bool>& getSieve() const { return sieve; }
-    
-    /**
-     * @brief Get the limit for derived classes.
-     * @return The upper limit.
-     */
-    std::size_t getLimit() const { return limit; }
-    
-    /**
-     * @brief Check if sieve has been generated for derived classes.
-     * @return True if generated, false otherwise.
-     */
-    bool isGenerated() const { return generated; }
-    
-    /**
-     * @brief Set the generated flag for derived classes.
-     * @param val The value to set.
-     */
-    void setGenerated(bool val) { generated = val; }
-
 public:
     /**
      * @brief Construct a BasicSieve with the specified upper limit.
@@ -56,13 +29,12 @@ public:
      */
     explicit BasicSieve(std::size_t n);
     
-    /**
-     * @brief Virtual destructor for proper polymorphic cleanup.
-     */
+    // DEBUG: Add virtual destructor and virtual generate method to fix override issue
     virtual ~BasicSieve() = default;
 
     /**
      * @brief Generate all prime numbers up to the limit.
+     * DEBUG: Made virtual to allow proper overriding
      */
     virtual void generate();
 
@@ -86,6 +58,18 @@ public:
     std::size_t getPrimeCount();
 
     /**
+     * @brief Get the upper limit for this sieve.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+
+    /**
+     * @brief Check if the sieve has been generated.
+     * @return True if the sieve has been generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
+
+    /**
      * @brief Print prime numbers to stdout.
      * @param perLine Number of primes to print per line (default: 10).
      */
@@ -97,6 +81,33 @@ public:
      * @return True if successful, false otherwise.
      */
     bool savePrimesToFile(const std::string& filename) const;
+
+    // DEBUG: Add protected getters to allow derived class access
+protected:
+    std::size_t getLimitProtected() const { 
+        DEBUG_LOG("Accessing limit through protected getter");
+        return limit; 
+    }
+    
+    std::vector<bool>& getSieve() { 
+        DEBUG_LOG("Accessing sieve through protected getter");
+        return sieve; 
+    }
+    
+    const std::vector<bool>& getSieve() const { 
+        DEBUG_LOG("Accessing sieve through protected getter");
+        return sieve; 
+    }
+    
+    bool isGeneratedProtected() const { 
+        DEBUG_LOG("Accessing generated through protected getter");
+        return generated; 
+    }
+    
+    void setGenerated(bool val) { 
+        DEBUG_LOG("Setting generated to " << val);
+        generated = val; 
+    }
 };
 
-#endif // BASIC_SIEVE_HPP
+#endif // BASIC_SIEVE_DEBUG_HPP

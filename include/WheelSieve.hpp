@@ -19,6 +19,37 @@ private:
     std::size_t limit;
     bool generated;
 
+protected:
+    /**
+     * @brief Get sieve array for derived classes.
+     * @return Reference to the sieve array.
+     */
+    std::vector<bool>& getSieve() { return sieve; }
+    
+    /**
+     * @brief Get sieve array for derived classes (const version).
+     * @return Const reference to the sieve array.
+     */
+    const std::vector<bool>& getSieve() const { return sieve; }
+    
+    /**
+     * @brief Get the limit for derived classes.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+    
+    /**
+     * @brief Check if the sieve has been generated for derived classes.
+     * @return True if generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
+    
+    /**
+     * @brief Set the generated flag for derived classes.
+     * @param val The value to set.
+     */
+    void setGenerated(bool val) { generated = val; }
+
     // Wheel parameters for 2,3,5-wheel
     static constexpr std::size_t WHEEL_SIZE = 30;  // 2*3*5
     static constexpr std::size_t WHEEL_PRIMES_COUNT = 8;  // Number of primes in wheel
@@ -56,11 +87,16 @@ public:
      * @param n The upper limit for finding prime numbers.
      */
     explicit WheelSieve(std::size_t n);
+    
+    /**
+     * @brief Virtual destructor for proper polymorphic cleanup.
+     */
+    virtual ~WheelSieve() = default;
 
     /**
      * @brief Generate all prime numbers up to the limit using wheel factorization.
      */
-    void generate();
+    virtual void generate();
 
     /**
      * @brief Get a vector of all prime numbers found.
