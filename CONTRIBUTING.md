@@ -162,15 +162,22 @@ Example:
 ```cpp
 class MySieve {
 public:
-    std::vector<uint64_t> findPrimes(uint64_t limit) {
-        if (limit < 2) {
-            return {};
+    explicit MySieve(std::size_t limit) : m_limit(limit) {}
+
+    void generate() {
+        if (m_limit < 2) {
+            return;
         }
         // Implementation
     }
 
+    std::vector<std::size_t> getPrimes() const {
+        return m_primes;
+    }
+
 private:
-    std::vector<uint64_t> m_primes;
+    std::size_t m_limit;
+    std::vector<std::size_t> m_primes;
 };
 ```
 
