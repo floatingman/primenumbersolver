@@ -38,19 +38,18 @@ A high-performance C++ application that efficiently finds prime numbers using th
 
 2. Install dependencies using Conan:
    ```bash
-   conan install . --build=missing
+   conan install . --output-folder=build --build=missing
    ```
 
 3. Build the project:
    ```bash
-   mkdir build && cd build
-   cmake .. -DCMAKE_BUILD_TYPE=Release
-   cmake --build .
+   cmake --preset conan-release
+   cmake --build --preset conan-release
    ```
 
 4. Run tests:
    ```bash
-   ctest --verbose
+   ctest --preset conan-release
    ```
 
 ### Alternative Build (without Conan)
@@ -178,8 +177,7 @@ The project includes comprehensive unit tests for all sieve implementations:
 To run tests:
 
 ```bash
-cd build
-ctest --verbose
+ctest --preset conan-release
 ```
 
 ## Future Enhancements
