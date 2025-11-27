@@ -198,7 +198,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on:
+
+- How to set up your development environment
+- Coding standards and best practices
+- How to submit pull requests
+- Testing requirements
+- Branch protection rules
+
+For quick contributions, feel free to submit a Pull Request following the guidelines in CONTRIBUTING.md.
 
 ## Acknowledgments
 
