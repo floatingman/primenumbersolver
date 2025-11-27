@@ -52,7 +52,7 @@ ctest --verbose
 - **Functions/methods**: `camelCase` (e.g., `findPrimes`, `isPrime`)
 - **Variables**: `camelCase` (e.g., `primeCount`, `upperLimit`)
 - **Constants**: `UPPER_CASE` (e.g., `MAX_LIMIT`, `DEFAULT_THREADS`)
-- **Private members**: prefix with `m_` (e.g., `m_primes`, `m_isPrime`)
+- **Private members**: `camelCase` (e.g., `sieve`, `limit`, `generated`)
 
 ### Code Style
 
