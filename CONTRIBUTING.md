@@ -146,7 +146,7 @@ We welcome various types of contributions:
 - **Standard**: Follow C++17 best practices
 - **Naming conventions**:
   - Classes: `PascalCase` (e.g., `BasicSieve`, `BitSieve`)
-  - Functions/methods: `camelCase` (e.g., `findPrimes`, `isPrime`)
+  - Functions/methods: `camelCase` (e.g., `getPrimes`, `isPrime`)
   - Variables: `camelCase` (e.g., `primeCount`, `upperLimit`)
   - Constants: `UPPER_CASE` (e.g., `MAX_LIMIT`, `DEFAULT_THREADS`)
   - Private members: prefix with `m_` (e.g., `m_primes`, `m_isPrime`)
