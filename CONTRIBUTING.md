@@ -162,7 +162,7 @@ Example:
 ```cpp
 class MySieve {
 public:
-    std::vector<uint64_t> findPrimes(uint64_t limit) {
+    std::vector<uint64_t> getPrimes(uint64_t limit) {
         if (limit < 2) {
             return {};
         }
