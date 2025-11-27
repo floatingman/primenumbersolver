@@ -18,21 +18,34 @@ find_package(fmt REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(GTest REQUIRED)
 
+# Add OpenMP compilation flags
+if(OpenMP_CXX_FOUND)
+    target_compile_options(prime_sieve PRIVATE OpenMP::OpenMP_CXX_FLAGS)
+    target_link_libraries(prime_sieve PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
 # Add source files
 set(SOURCES
     src/BasicSieve.cpp
     src/BitSieve.cpp
     src/WheelSieve.cpp
+    src/ParallelBasicSieve.cpp
+    src/ParallelBitSieve.cpp
+    src/ParallelWheelSieve.cpp
     src/main.cpp
+    src/benchmark_parallel.cpp
 )
 
 set(HEADERS
     include/BasicSieve.hpp
     include/BitSieve.hpp
     include/WheelSieve.hpp
+    include/ParallelBasicSieve.hpp
+    include/ParallelBitSieve.hpp
+    include/ParallelWheelSieve.hpp
 )
 
-# Create the main executable
+# Create main executable
 add_executable(prime_sieve ${SOURCES} ${HEADERS})
 
 # Link libraries
@@ -54,6 +67,7 @@ target_include_directories(prime_sieve
 set(BASIC_TEST_SOURCES
     tests/test_BasicSieve.cpp
     src/BasicSieve.cpp
+    ${HEADERS}
 )
 
 add_executable(prime_sieve_basic_tests ${BASIC_TEST_SOURCES} ${HEADERS})
@@ -76,6 +90,7 @@ set(BIT_TEST_SOURCES
     tests/test_BitSieve.cpp
     src/BasicSieve.cpp
     src/BitSieve.cpp
+    ${HEADERS}
 )
 
 add_executable(prime_sieve_bit_tests ${BIT_TEST_SOURCES} ${HEADERS})
@@ -99,6 +114,7 @@ set(WHEEL_TEST_SOURCES
     src/BasicSieve.cpp
     src/BitSieve.cpp
     src/WheelSieve.cpp
+    ${HEADERS}
 )
 
 add_executable(prime_sieve_wheel_tests ${WHEEL_TEST_SOURCES} ${HEADERS})
@@ -116,11 +132,33 @@ target_include_directories(prime_sieve_wheel_tests
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+# Add benchmark executable
+set(BENCHMARK_SOURCES
+    src/benchmark_parallel.cpp
+    ${HEADERS}
+)
+
+add_executable(prime_sieve_benchmark ${BENCHMARK_SOURCES} ${HEADERS})
+
+# Link benchmark libraries
+target_link_libraries(prime_sieve_benchmark
+    PRIVATE
+    GTest::gtest
+    GTest::gtest_main
+)
+
+# Include directories for benchmark
+target_include_directories(prime_sieve_benchmark
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
 # Enable testing
 enable_testing()
 add_test(NAME BasicSieveTest COMMAND prime_sieve_basic_tests)
 add_test(NAME BitSieveTest COMMAND prime_sieve_bit_tests)
 add_test(NAME WheelSieveTest COMMAND prime_sieve_wheel_tests)
+add_test(NAME BenchmarkTest COMMAND prime_sieve_benchmark)
 
 # Install targets
 install(TARGETS prime_sieve DESTINATION bin)

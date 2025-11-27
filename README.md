@@ -7,6 +7,7 @@ A high-performance C++ application that efficiently finds prime numbers using th
 - **Basic Sieve**: Standard implementation of the Sieve of Eratosthenes algorithm
 - **Bit-Optimized Sieve**: Memory-efficient implementation using bit manipulation (8x memory reduction)
 - **Wheel Factorization**: Performance-optimized implementation using 2,3,5-wheel factorization (~73% reduction in operations)
+- **Parallel Processing**: Multi-threaded execution using OpenMP for improved performance on multi-core systems
 - **Command-Line Interface**: Flexible CLI with multiple options for different use cases
 - **Performance Monitoring**: Built-in timing and memory usage tracking
 - **Multiple Output Formats**: Support for console output, file output, and count-only display
@@ -25,6 +26,7 @@ A high-performance C++ application that efficiently finds prime numbers using th
 - CMake 3.15 or higher
 - C++17 compatible compiler
 - Conan package manager (recommended for dependency management)
+- OpenMP support (for parallel processing)
 
 ### Build Instructions
 
@@ -72,46 +74,62 @@ Find all prime numbers up to 1,000,000:
 ./prime_sieve --limit 1000000
 ```
 
+### Parallel Processing
+
+Find primes up to 10,000,000 using 4 threads with bit-optimized sieve:
+```bash
+./prime_sieve --limit 10000000 --bit-sieve --threads 4
+```
+
+Find primes up to 100,000,000 using wheel factorization with parallel processing:
+```bash
+./prime_sieve --limit 10000000 --wheel-sieve --threads 8
+```
+
 ### Command-Line Options
 
 | Option | Description |
 |--------|-------------|
-| `-l, --limit N` | Upper limit for finding prime numbers (default: 1,000,000) |
-| `-c, --count` | Show only the count of prime numbers |
-| `-t, --time` | Show execution time |
-| `-s, --list` | Show the list of prime numbers |
-| `-o, --output FILE` | Save primes to a file |
-| `--bit-sieve` | Use bit-optimized sieve for memory efficiency |
-| `--wheel-sieve` | Use 2,3,5-wheel factorization for performance |
+| `-l,--limit N` | Upper limit for finding prime numbers (default: 1,000,000) |
+| `-c,--count` | Show only the count of prime numbers |
+| `-t,--time` | Show execution time |
+| `-s,--list` | Show the list of prime numbers |
+| `-o,--output FILE` | Save primes to a file |
 | `--segmented` | Use segmented sieve for large ranges |
 | `--segment-size N` | Segment size for segmented sieve (default: 1,000,000) |
 | `--per-line N` | Number of primes to print per line (default: 10) |
+| `--bit-sieve` | Use bit-optimized sieve for memory efficiency |
+| `--wheel-sieve` | Use 2,3,5-wheel factorization for performance |
+| `--threads N` | Number of threads to use (0 for auto-detect) |
+| `--parallel` | Enable parallel processing (default) |
+| `--no-parallel` | Disable parallel processing |
+| `--thread-info` | Display thread information and exit |
 
-### Examples
+### Performance Examples
 
 1. Find primes up to 10,000,000 and show execution time:
    ```bash
    ./prime_sieve --limit 10000000 --time
    ```
 
-2. Find primes up to 1,000,000,000 using bit-optimized sieve:
+2. Find primes up to 1,000,000,000 using bit-optimized sieve with 8 threads:
    ```bash
-   ./prime_sieve --limit 1000000000 --bit-sieve --time
+   ./prime_sieve --limit 1000000000 --bit-sieve --threads 8 --time
    ```
 
-3. Find primes up to 100,000,000 using wheel factorization:
+3. Find primes up to 1,000,000,000 using wheel factorization with parallel processing:
    ```bash
-   ./prime_sieve --limit 100000000 --wheel-sieve --time
+   ./prime_sieve --limit 1000000000 --wheel-sieve --threads 8 --time
    ```
 
-4. Save primes to a file:
+4. Run performance benchmarks:
    ```bash
-   ./prime_sieve --limit 1000000 --output primes.txt
+   ./prime_sieve_benchmark 1000000000 4
    ```
 
-5. Show only the count of primes:
+5. Display system thread information:
    ```bash
-   ./prime_sieve --limit 1000000 --count --time
+   ./prime_sieve --thread-info
    ```
 
 ## Algorithm Details
@@ -138,7 +156,15 @@ The 2,3,5-wheel factorization optimization skips multiples of 2, 3, and 5, reduc
 
 1. Pre-marking multiples of 2, 3, and 5
 2. Using a wheel pattern to skip these multiples during sieve generation
-3. Only checking numbers that are not multiples of 2, 3, or 5
+
+#### Parallel Processing with OpenMP
+
+The parallel implementation uses OpenMP to distribute work among multiple CPU cores:
+
+- **Work-sharing approach**: The range is divided among threads for better cache locality
+- **Automatic core detection**: Detects available CPU cores and optimizes thread count
+- **Load balancing**: Uses appropriate OpenMP scheduling for optimal performance
+- **Thread safety**: Proper synchronization for shared data structures
 
 ## Testing
 
@@ -147,19 +173,12 @@ The project includes comprehensive unit tests for all sieve implementations:
 - Basic Sieve tests (`tests/test_BasicSieve.cpp`)
 - Bit-Optimized Sieve tests (`tests/test_BitSieve.cpp`)
 - Wheel Factorization tests (`tests/test_WheelSieve.cpp`)
+- Parallel processing benchmarks (`src/benchmark_parallel.cpp`)
 
-To run the tests:
+To run tests:
 
 ```bash
 cd build
-./prime_sieve_basic_tests
-./prime_sieve_bit_tests
-./prime_sieve_wheel_tests
-```
-
-Or using CTest:
-
-```bash
 ctest --verbose
 ```
 
@@ -168,10 +187,10 @@ ctest --verbose
 Potential improvements for future versions:
 
 - **Segmented Sieve**: For very large ranges that exceed memory limitations
-- **Parallel Processing**: Using OpenMP for multi-threaded execution
 - **GPU Acceleration**: For very large ranges using CUDA or OpenCL
 - **Advanced Sieves**: Implementation of Atkin's sieve or Sundaram's sieve
 - **Web Interface**: Cloud deployment with a web-based interface
+- **Distributed Computing**: Support for cluster-based prime number generation
 
 ## License
 
