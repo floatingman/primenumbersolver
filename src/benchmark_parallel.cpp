@@ -54,8 +54,9 @@ void runBenchmark(std::size_t limit, int threadCount) {
         std::size_t parallelMemory = limit + 1;
         
         double speedup = seqTime / parTime;
-        results.push_back(BenchmarkResult(limit, "BasicSieve", threadCount, 
-                                         seqTime, parTime, speedup, basicMemory));
+        BenchmarkResult basicResult(limit, "BasicSieve", threadCount,
+                                         seqTime, parTime, speedup, basicMemory);
+        results.push_back(basicResult);
     }
     
     // Benchmark BitSieve
@@ -75,8 +76,9 @@ void runBenchmark(std::size_t limit, int threadCount) {
         std::size_t parallelMemory = parallelBitSieve.getMemoryUsage();
         
         double speedup = seqTime / parTime;
-        results.push_back(BenchmarkResult(limit, "BitSieve", threadCount, 
-                                         seqTime, parTime, speedup, bitMemory));
+        BenchmarkResult bitResult(limit, "BitSieve", threadCount,
+                                         seqTime, parTime, speedup, bitMemory);
+        results.push_back(bitResult);
     }
     
     // Benchmark WheelSieve
@@ -96,8 +98,9 @@ void runBenchmark(std::size_t limit, int threadCount) {
         std::size_t parallelMemory = parallelWheelSieve.getMemoryUsage();
         
         double speedup = seqTime / parTime;
-        results.push_back(BenchmarkResult(limit, "WheelSieve", threadCount, 
-                                         seqTime, parTime, speedup, wheelMemory));
+        BenchmarkResult wheelResult(limit, "WheelSieve", threadCount,
+                                         seqTime, parTime, speedup, wheelMemory);
+        results.push_back(wheelResult);
     }
     
     // Print results

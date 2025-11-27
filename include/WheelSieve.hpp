@@ -32,6 +32,7 @@ protected:
      */
     const std::vector<bool>& getSieve() const { return sieve; }
     
+    
     /**
      * @brief Get the limit for derived classes.
      * @return The upper limit.
@@ -117,17 +118,6 @@ public:
      */
     std::size_t getPrimeCount();
 
-    /**
-     * @brief Get the upper limit for this sieve.
-     * @return The upper limit.
-     */
-    std::size_t getLimit() const { return limit; }
-
-    /**
-     * @brief Check if the sieve has been generated.
-     * @return True if the sieve has been generated, false otherwise.
-     */
-    bool isGenerated() const { return generated; }
 
     /**
      * @brief Get the memory usage in bytes.
