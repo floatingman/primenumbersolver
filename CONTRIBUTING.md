@@ -146,7 +146,7 @@ We welcome various types of contributions:
 - **Standard**: Follow C++17 best practices
 - **Naming conventions**:
   - Classes: `PascalCase` (e.g., `BasicSieve`, `BitSieve`)
-  - Functions/methods: `camelCase` (e.g., `findPrimes`, `isPrime`)
+  - Functions/methods: `camelCase` (e.g., `getPrimes`, `isPrime`)
   - Variables: `camelCase` (e.g., `primeCount`, `upperLimit`)
   - Constants: `UPPER_CASE` (e.g., `MAX_LIMIT`, `DEFAULT_THREADS`)
   - Private members: prefix with `m_` (e.g., `m_primes`, `m_isPrime`)
@@ -162,22 +162,15 @@ Example:
 ```cpp
 class MySieve {
 public:
-    explicit MySieve(std::size_t limit) : m_limit(limit) {}
-
-    void generate() {
-        if (m_limit < 2) {
-            return;
+    std::vector<uint64_t> getPrimes(uint64_t limit) {
+        if (limit < 2) {
+            return {};
         }
         // Implementation
     }
 
-    std::vector<std::size_t> getPrimes() const {
-        return m_primes;
-    }
-
 private:
-    std::size_t m_limit;
-    std::vector<std::size_t> m_primes;
+    std::vector<uint64_t> m_primes;
 };
 ```
 
@@ -217,9 +210,8 @@ Tests use Google Test framework:
 #include "BasicSieve.hpp"
 
 TEST(BasicSieveTest, SmallRange) {
-    BasicSieve sieve(10);
-    sieve.generate();
-    auto primes = sieve.getPrimes();
+    BasicSieve sieve;
+    auto primes = sieve.findPrimes(10);
     ASSERT_EQ(primes.size(), 4);
     EXPECT_EQ(primes[0], 2);
     EXPECT_EQ(primes[1], 3);
