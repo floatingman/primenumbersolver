@@ -74,7 +74,7 @@ public:
     }
 
 private:
-    std::vector<uint64_t> m_primes;
+    std::vector<uint64_t> primes;
 };
 ```
 
