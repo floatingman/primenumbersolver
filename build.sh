@@ -9,15 +9,15 @@ if [ ! -d "build" ]; then
 fi
 
 # Install dependencies with Conan
-conan install . --build=missing
+conan install . --output-folder=build --build=missing
 
 # Configure with CMake using Conan preset
 cmake --preset conan-release
 
 # Build the project
-cmake --build . --config Release
+cmake --build --preset conan-release
 
 # Run tests
-ctest --verbose
+ctest --preset conan-release
 
 echo "Build completed successfully!"
