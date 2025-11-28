@@ -149,7 +149,7 @@ We welcome various types of contributions:
   - Functions/methods: `camelCase` (e.g., `getPrimes`, `isPrime`)
   - Variables: `camelCase` (e.g., `primeCount`, `upperLimit`)
   - Constants: `UPPER_CASE` (e.g., `MAX_LIMIT`, `DEFAULT_THREADS`)
-  - Private members: prefix with `m_` (e.g., `m_primes`, `m_isPrime`)
+  - Private members: `camelCase` (e.g., `sieve`, `limit`, `generated`)
 
 ### Code Formatting
 
@@ -170,7 +170,7 @@ public:
     }
 
 private:
-    std::vector<uint64_t> m_primes;
+    std::vector<uint64_t> primes;
 };
 ```
 
