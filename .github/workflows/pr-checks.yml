@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Conan
         run: |
-          pip install conan==2.0.17
+          pip install conan
           conan profile detect --force
 
       - name: Cache Conan packages
@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          conan install . --output-folder=build --build=missing
+          conan install . --output-folder=build --build=missing -o "boost/*:without_iostreams=True"
 
       - name: Configure CMake
         run: |
