@@ -94,14 +94,14 @@ cmake --preset conan-release
 cmake --build . --config Release
 
 # Run tests
-ctest --verbose
+ctest --preset conan-release
 ```
 
 ### Running Tests
 
 ```bash
 # Run all tests
-ctest --verbose
+ctest --preset conan-release
 
 # Run specific test suite
 ./prime_sieve_basic_tests
