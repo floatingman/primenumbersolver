@@ -135,6 +135,18 @@ public:
      * @return True if successful, false otherwise.
      */
     bool savePrimesToFile(const std::string& filename) const;
+
+    /**
+     * @brief Get the upper limit for this sieve.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+
+    /**
+     * @brief Check if sieve has been generated.
+     * @return True if generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
 };
 
 #endif // WHEEL_SIEVE_HPP
