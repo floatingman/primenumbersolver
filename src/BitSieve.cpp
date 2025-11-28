@@ -17,24 +17,6 @@ BitSieve::BitSieve(std::size_t n) : limit(n), generated(false) {
     if (limit >= 1) clearBit(1);
 }
 
-inline bool BitSieve::getBit(std::size_t index) const {
-    std::size_t arrayIndex = index / 64;
-    std::size_t bitPosition = index % 64;
-    return (bits[arrayIndex] >> bitPosition) & 1ULL;
-}
-
-inline void BitSieve::setBit(std::size_t index) {
-    std::size_t arrayIndex = index / 64;
-    std::size_t bitPosition = index % 64;
-    bits[arrayIndex] |= (1ULL << bitPosition);
-}
-
-inline void BitSieve::clearBit(std::size_t index) {
-    std::size_t arrayIndex = index / 64;
-    std::size_t bitPosition = index % 64;
-    bits[arrayIndex] &= ~(1ULL << bitPosition);
-}
-
 void BitSieve::generate() {
     if (generated) return; // Already generated
     

@@ -51,19 +51,31 @@ protected:
      * @param index The index of the bit to get.
      * @return True if the bit is set (1), false if it's clear (0).
      */
-    inline bool getBit(std::size_t index) const;
+    inline bool getBit(std::size_t index) const {
+        std::size_t arrayIndex = index / 64;
+        std::size_t bitPosition = index % 64;
+        return (bits[arrayIndex] >> bitPosition) & 1ULL;
+    }
 
     /**
      * @brief Set a bit at the specified index to 1 (non-prime).
      * @param index The index of the bit to set.
      */
-    inline void setBit(std::size_t index);
+    inline void setBit(std::size_t index) {
+        std::size_t arrayIndex = index / 64;
+        std::size_t bitPosition = index % 64;
+        bits[arrayIndex] |= (1ULL << bitPosition);
+    }
 
     /**
      * @brief Clear a bit at the specified index to 0 (prime).
      * @param index The index of the bit to clear.
      */
-    inline void clearBit(std::size_t index);
+    inline void clearBit(std::size_t index) {
+        std::size_t arrayIndex = index / 64;
+        std::size_t bitPosition = index % 64;
+        bits[arrayIndex] &= ~(1ULL << bitPosition);
+    }
 
 public:
     /**
