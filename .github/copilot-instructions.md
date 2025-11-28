@@ -14,17 +14,16 @@ This repository contains a high-performance C++ application that finds prime num
 
 ```bash
 # Install dependencies
-conan install . --build=missing
+conan install . --output-folder=build --build=missing
 
 # Build the project
 ./build.sh
 # Or manually:
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-cmake --build .
+cmake --preset conan-release
+cmake --build --preset conan-release
 
 # Run tests
-ctest --verbose
+ctest --preset conan-release
 
 # Run specific test suites
 ./prime_sieve_basic_tests
