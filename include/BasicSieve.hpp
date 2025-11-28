@@ -18,17 +18,41 @@ private:
     std::size_t limit;
     bool generated;
 
+protected:
+    /**
+     * @brief Get the sieve array for derived classes.
+     * @return Reference to the sieve array.
+     */
+    std::vector<bool>& getSieve() { return sieve; }
+    
+    /**
+     * @brief Get the sieve array for derived classes (const version).
+     * @return Const reference to the sieve array.
+     */
+    const std::vector<bool>& getSieve() const { return sieve; }
+    
+    /**
+     * @brief Set the generated flag for derived classes.
+     * @param val The value to set.
+     */
+    void setGenerated(bool val) { generated = val; }
+
 public:
     /**
      * @brief Construct a BasicSieve with the specified upper limit.
      * @param n The upper limit for finding prime numbers.
      */
     explicit BasicSieve(std::size_t n);
+    
+    /**
+     * @brief Virtual destructor for proper polymorphic cleanup.
+     */
+    virtual ~BasicSieve() = default;
 
     /**
      * @brief Generate all prime numbers up to the limit.
      */
-    void generate();
+    virtual void generate();
 
     /**
      * @brief Get a vector of all prime numbers found.
@@ -56,8 +80,8 @@ public:
     std::size_t getLimit() const { return limit; }
 
     /**
-     * @brief Check if the sieve has been generated.
-     * @return True if the sieve has been generated, false otherwise.
+     * @brief Check if sieve has been generated.
+     * @return True if generated, false otherwise.
      */
     bool isGenerated() const { return generated; }
 

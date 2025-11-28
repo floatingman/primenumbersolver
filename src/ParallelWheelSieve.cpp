@@ -2,6 +2,7 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <cmath>
 
 ParallelWheelSieve::ParallelWheelSieve(std::size_t n, int threads) 
     : WheelSieve(n), ParallelSieveBase(threads) {
@@ -11,8 +12,8 @@ void ParallelWheelSieve::markMultiplesParallel(std::size_t prime) {
     if (!useParallel || threadCount <= 1) {
         // Fallback to sequential implementation
         std::size_t multiple = prime * prime;
-        while (multiple <= limit) {
-            sieve[multiple] = false;
+        while (multiple <= getLimit()) {
+            getSieve()[multiple] = false;
             multiple += prime;
         }
         return;
@@ -20,7 +21,7 @@ void ParallelWheelSieve::markMultiplesParallel(std::size_t prime) {
     
     // Parallel implementation using work-sharing
     std::size_t start = prime * prime;
-    std::size_t end = limit;
+    std::size_t end = getLimit();
     
     // Calculate optimal chunk size for load balancing
     // Use smaller chunks for wheel operations to improve cache efficiency
@@ -29,7 +30,7 @@ void ParallelWheelSieve::markMultiplesParallel(std::size_t prime) {
     
     #pragma omp parallel for schedule(static, chunkSize)
     for (std::size_t i = start; i <= end; i += prime) {
-        sieve[i] = false;
+        getSieve()[i] = false;
     }
 }
 
@@ -37,8 +38,8 @@ void ParallelWheelSieve::markMultiplesParallelChunked(std::size_t prime, std::si
     if (!useParallel || threadCount <= 1) {
         // Fallback to sequential implementation
         std::size_t multiple = prime * prime;
-        while (multiple <= limit) {
-            sieve[multiple] = false;
+        while (multiple <= getLimit()) {
+            getSieve()[multiple] = false;
             multiple += prime;
         }
         return;
@@ -46,11 +47,11 @@ void ParallelWheelSieve::markMultiplesParallelChunked(std::size_t prime, std::si
     
     // Parallel implementation with explicit chunking for better load balancing
     std::size_t start = prime * prime;
-    std::size_t end = limit;
+    std::size_t end = getLimit();
     
     #pragma omp parallel for schedule(static, chunkSize)
     for (std::size_t i = start; i <= end; i += prime) {
-        sieve[i] = false;
+        getSieve()[i] = false;
     }
 }
 
@@ -68,7 +69,7 @@ std::size_t ParallelWheelSieve::getNextWheelNumberParallel(std::size_t current) 
         if (current == 2) return 3;
         if (current == 3) return 5;
         if (current == 5) return 7;
-        return limit + 1; // Signal end
+        return getLimit() + 1; // Signal end
     }
     
     // For numbers >= 7, use the wheel to find the next number
@@ -80,7 +81,7 @@ std::size_t ParallelWheelSieve::getNextWheelNumberParallel(std::size_t current) 
     
     #pragma omp parallel reduction(+:found)
     {
-        while (next <= limit) {
+        while (next <= getLimit()) {
             if (next % 2 != 0 && next % 3 != 0 && next % 5 != 0) {
                 found = 1;
                 #pragma omp flush(found)
@@ -91,32 +92,12 @@ std::size_t ParallelWheelSieve::getNextWheelNumberParallel(std::size_t current) 
         }
     }
     
-    return found ? next : limit + 1;
+    return found ? next : getLimit() + 1;
 }
 
-void ParallelWheelSieve::markMultiplesParallelChunked(std::size_t prime, std::size_t chunkSize) {
-    if (!useParallel || threadCount <= 1) {
-        // Fallback to sequential implementation
-        std::size_t multiple = prime * prime;
-        while (multiple <= limit) {
-            sieve[multiple] = false;
-            multiple += prime;
-        }
-        return;
-    }
-    
-    // Parallel implementation with explicit chunking for better load balancing
-    std::size_t start = prime * prime;
-    std::size_t end = limit;
-    
-    #pragma omp parallel for schedule(static, chunkSize)
-    for (std::size_t i = start; i <= end; i += prime) {
-        sieve[i] = false;
-    }
-}
 
 void ParallelWheelSieve::generate() {
-    if (generated) return; // Already generated
+    if (isGenerated()) return; // Already generated
     
     if (!useParallel || threadCount <= 1) {
         // Use sequential implementation for single thread
@@ -127,9 +108,9 @@ void ParallelWheelSieve::generate() {
     // Start with first prime in the wheel (7)
     std::size_t p = 7;
     
-    while (p * p <= limit) {
+    while (p * p <= getLimit()) {
         // If p is prime
-        if (sieve[p]) {
+        if (getSieve()[p]) {
             // Mark multiples of p in parallel
             markMultiplesParallel(p);
         }
@@ -138,17 +119,17 @@ void ParallelWheelSieve::generate() {
         p = getNextWheelNumberParallel(p);
     }
     
-    generated = true;
+    setGenerated(true);
 }
 
 std::string ParallelWheelSieve::getPerformanceStats() const {
-    if (!generated) {
+    if (!isGenerated()) {
         return "Sieve not generated yet";
     }
     
     std::ostringstream oss;
     oss << "Parallel WheelSieve Performance:\n";
-    oss << "  Limit: " << limit << "\n";
+    oss << "  Limit: " << getLimit() << "\n";
     oss << "  Threads: " << threadCount << "\n";
     oss << "  Parallel: " << (useParallel ? "Yes" : "No") << "\n";
     oss << "  Memory Usage: " << getMemoryUsage() << " bytes\n";

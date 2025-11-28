@@ -18,12 +18,6 @@ find_package(fmt REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(GTest REQUIRED)
 
-# Add OpenMP compilation flags
-if(OpenMP_CXX_FOUND)
-    target_compile_options(prime_sieve PRIVATE OpenMP::OpenMP_CXX_FLAGS)
-    target_link_libraries(prime_sieve PRIVATE OpenMP::OpenMP_CXX)
-endif()
-
 # Add source files
 set(SOURCES
     src/BasicSieve.cpp

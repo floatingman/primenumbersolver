@@ -21,6 +21,31 @@ private:
     std::size_t bitCount;
     bool generated;
 
+protected:
+    /**
+     * @brief Get the bits array for derived classes.
+     * @return Reference to the bits array.
+     */
+    std::vector<uint64_t>& getBits() { return bits; }
+    
+    /**
+     * @brief Get the bits array for derived classes (const version).
+     * @return Const reference to the bits array.
+     */
+    const std::vector<uint64_t>& getBits() const { return bits; }
+    
+    /**
+     * @brief Get the bit count for derived classes.
+     * @return The bit count.
+     */
+    std::size_t getBitCount() const { return bitCount; }
+    
+    /**
+     * @brief Set the generated flag for derived classes.
+     * @param val The value to set.
+     */
+    void setGenerated(bool val) { generated = val; }
+    
     /**
      * @brief Get the value of a bit at the specified index.
      * @param index The index of the bit to get.
@@ -46,11 +71,16 @@ public:
      * @param n The upper limit for finding prime numbers.
      */
     explicit BitSieve(std::size_t n);
+    
+    /**
+     * @brief Virtual destructor for proper polymorphic cleanup.
+     */
+    virtual ~BitSieve() = default;
 
     /**
      * @brief Generate all prime numbers up to the limit using bit manipulation.
      */
-    void generate();
+    virtual void generate();
 
     /**
      * @brief Get a vector of all prime numbers found.
