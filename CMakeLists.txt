@@ -27,7 +27,6 @@ set(SOURCES
     src/ParallelBitSieve.cpp
     src/ParallelWheelSieve.cpp
     src/main.cpp
-    src/benchmark_parallel.cpp
 )
 
 set(HEADERS
@@ -129,6 +128,12 @@ target_include_directories(prime_sieve_wheel_tests
 # Add benchmark executable
 set(BENCHMARK_SOURCES
     src/benchmark_parallel.cpp
+    src/BasicSieve.cpp
+    src/BitSieve.cpp
+    src/WheelSieve.cpp
+    src/ParallelBasicSieve.cpp
+    src/ParallelBitSieve.cpp
+    src/ParallelWheelSieve.cpp
     ${HEADERS}
 )
 
@@ -137,8 +142,7 @@ add_executable(prime_sieve_benchmark ${BENCHMARK_SOURCES} ${HEADERS})
 # Link benchmark libraries
 target_link_libraries(prime_sieve_benchmark
     PRIVATE
-    GTest::gtest
-    GTest::gtest_main
+    OpenMP::OpenMP_CXX
 )
 
 # Include directories for benchmark
@@ -152,7 +156,6 @@ enable_testing()
 add_test(NAME BasicSieveTest COMMAND prime_sieve_basic_tests)
 add_test(NAME BitSieveTest COMMAND prime_sieve_bit_tests)
 add_test(NAME WheelSieveTest COMMAND prime_sieve_wheel_tests)
-add_test(NAME BenchmarkTest COMMAND prime_sieve_benchmark)
 
 # Install targets
 install(TARGETS prime_sieve DESTINATION bin)
