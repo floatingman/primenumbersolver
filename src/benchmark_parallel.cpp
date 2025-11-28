@@ -13,8 +13,7 @@
  * @struct BenchmarkResult
  * @brief Structure to hold benchmark results for comparison.
  */
-struct BenchmarkResult
-{
+struct BenchmarkResult {
     std::size_t limit;
     std::string algorithm;
     int threadCount;
@@ -35,8 +34,7 @@ struct BenchmarkResult
  * @param limit Upper limit for prime numbers.
  * @param threadCount Number of threads to use for parallel tests.
  */
-void runBenchmark(std::size_t limit, int threadCount)
-{
+void runBenchmark(std::size_t limit, int threadCount) {
     std::vector<BenchmarkResult> results;
 
     // Benchmark BasicSieve
@@ -112,8 +110,7 @@ void runBenchmark(std::size_t limit, int threadCount)
               << std::setw(18) << "Par Memory (bytes)" << "\n";
     std::cout << std::string(65, '-') << "\n";
 
-    for (const auto &result : results)
-    {
+    for (const auto &result : results) {
         std::cout << std::left << std::setw(12) << result.algorithm
                   << std::setw(15) << std::fixed << std::setprecision(2) << result.sequentialTime
                   << std::setw(18) << std::fixed << std::setprecision(2) << result.parallelTime
@@ -125,10 +122,8 @@ void runBenchmark(std::size_t limit, int threadCount)
 /**
  * @brief Main function to run performance benchmarks.
  */
-int main(int argc, char **argv)
-{
-    if (argc < 3)
-    {
+int main(int argc, char **argv) {
+    if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <limit> <threads>\n";
         std::cerr << "  <limit>: Upper limit for prime numbers\n";
         std::cerr << "  <threads>: Number of threads to use\n";
