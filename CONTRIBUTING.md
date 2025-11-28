@@ -61,7 +61,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
 pip install conan
 
 # Install project dependencies
-conan install . --build=missing
+conan install . --output-folder=build --build=missing
 ```
 
 #### Manual Installation
@@ -85,7 +85,7 @@ If you prefer not to use Conan, install these dependencies manually:
 
 ```bash
 # Install dependencies
-conan install . --build=missing
+conan install . --output-folder=build --build=missing
 
 # Configure with CMake
 cmake --preset conan-release
