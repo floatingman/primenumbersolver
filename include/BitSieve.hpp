@@ -35,22 +35,10 @@ protected:
     const std::vector<uint64_t>& getBits() const { return bits; }
     
     /**
-     * @brief Get the limit for derived classes.
-     * @return The upper limit.
-     */
-    std::size_t getLimit() const { return limit; }
-    
-    /**
      * @brief Get the bit count for derived classes.
      * @return The bit count.
      */
     std::size_t getBitCount() const { return bitCount; }
-    
-    /**
-     * @brief Check if the sieve has been generated for derived classes.
-     * @return True if generated, false otherwise.
-     */
-    bool isGenerated() const { return generated; }
     
     /**
      * @brief Set the generated flag for derived classes.
@@ -112,6 +100,18 @@ public:
      * @return The count of prime numbers up to the limit.
      */
     std::size_t getPrimeCount();
+
+    /**
+     * @brief Get the upper limit for this sieve.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+
+    /**
+     * @brief Check if the sieve has been generated.
+     * @return True if the sieve has been generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
 
     /**
      * @brief Get the memory usage in bytes.
