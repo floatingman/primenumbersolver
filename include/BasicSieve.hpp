@@ -32,18 +32,6 @@ protected:
     const std::vector<bool>& getSieve() const { return sieve; }
     
     /**
-     * @brief Get the limit for derived classes.
-     * @return The upper limit.
-     */
-    std::size_t getLimit() const { return limit; }
-    
-    /**
-     * @brief Check if sieve has been generated for derived classes.
-     * @return True if generated, false otherwise.
-     */
-    bool isGenerated() const { return generated; }
-    
-    /**
      * @brief Set the generated flag for derived classes.
      * @param val The value to set.
      */
@@ -84,6 +72,18 @@ public:
      * @return The count of prime numbers up to the limit.
      */
     std::size_t getPrimeCount();
+
+    /**
+     * @brief Get the upper limit for this sieve.
+     * @return The upper limit.
+     */
+    std::size_t getLimit() const { return limit; }
+
+    /**
+     * @brief Check if sieve has been generated.
+     * @return True if generated, false otherwise.
+     */
+    bool isGenerated() const { return generated; }
 
     /**
      * @brief Print prime numbers to stdout.
