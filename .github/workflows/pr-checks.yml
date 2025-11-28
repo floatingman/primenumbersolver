@@ -1,0 +1,50 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake build-essential libomp-dev
+
+      - name: Install Conan
+        run: |
+          pip install conan
+          conan profile detect --force
+
+      - name: Cache Conan packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.conan2
+          key: ${{ runner.os }}-conan-${{ hashFiles('conanfile.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-conan-
+
+      - name: Install dependencies
+        run: |
+          conan install . --output-folder=build --build=missing -o "boost/*:without_iostreams=True"
+
+      - name: Configure CMake
+        run: |
+          cmake --preset conan-release
+
+      - name: Build
+        run: |
+          cmake --build --preset conan-release
+
+      - name: Run tests
+        run: |
+          ctest --preset conan-release --output-on-failure
