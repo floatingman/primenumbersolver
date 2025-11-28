@@ -80,8 +80,8 @@ public:
     std::size_t getLimit() const { return limit; }
 
     /**
-     * @brief Check if the sieve has been generated.
-     * @return True if the sieve has been generated, false otherwise.
+     * @brief Check if sieve has been generated.
+     * @return True if generated, false otherwise.
      */
     bool isGenerated() const { return generated; }
 
